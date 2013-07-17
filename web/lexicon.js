@@ -1,4 +1,6 @@
-angular.module('lexicon', ['mongolab']).
+
+
+var app = angular.module('lexicon', ['mongolab']).
   config(function($routeProvider) {
     $routeProvider.
       when('/', {controller:ListCtrl, templateUrl:'list.html'}).
@@ -28,6 +30,7 @@ function EditCtrl($scope, $location, $routeParams, Lexicon) {
   Lexicon.get({id: $routeParams.lexiconId}, function(lexicon) {
     self.original = lexicon;
     $scope.lexicon = new Lexicon(self.original);
+    $scope.lexicon.questions = eval('(' + $scope.lexicon.description + ')'); // TODO: Miro - optimize or expell
   });
  
   $scope.isClean = function() {
