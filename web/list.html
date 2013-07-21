@@ -3,13 +3,17 @@
   <thead>
   <tr>
     <th>Lexicon</th>
+    <th>Fill</th>
     <th>Description</th>
     <th><a href="#/new"><i class="icon-plus-sign"></i></a></th>
   </tr>
   </thead>
   <tbody>
   <tr ng-repeat="lexicon in lexicons | filter:search | orderBy:'name'">
-    <td><a href="{{lexicon.site}}" target="_blank">{{lexicon.name}}</a></td>
+    <td>{{lexicon.name}}</td>
+    <td>
+      <a href="#/fill/{{lexicon._id.$oid}}"><i class="icon-star"></i></a>
+    </td>
     <td>{{lexicon.description}}</td>
     <td>
       <a href="#/edit/{{lexicon._id.$oid}}"><i class="icon-pencil"></i></a>

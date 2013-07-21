@@ -6,6 +6,7 @@ var app = angular.module('lexicon', ['mongolab']).
       when('/', {controller:ListCtrl, templateUrl:'list.html'}).
       when('/edit/:lexiconId', {controller:EditCtrl, templateUrl:'detail.html'}).
       when('/new', {controller:CreateCtrl, templateUrl:'detail.html'}).
+      when('/fill/:lexiconId', {controller:EditCtrl, templateUrl:'fill.html'}).
       otherwise({redirectTo:'/'});
   });
  

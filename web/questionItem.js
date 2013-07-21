@@ -1,5 +1,9 @@
 app.directive('questionItem', function($compile) {
-  var textboxTemplate 	= '<div class="textbox">Question: {{question.question}} <br/>Type: {{question.type}}</div>';
+  var textboxTemplate 	= '<div class="textbox">'
+                          + '<label>Question: {{question.question}}</label>' 
+                          + '<label>Answer:</label>'
+                          + '<input type="text">'
+                          + '</div>';
   var imdbTemplate 	= '<div class="imdb">Question: {{question.question}} <br/>Type: {{question.type}}</div>';
   var youtubeTemplate 	= '<div class="youtube">Question: {{question.question}} <br/>Type: {{question.type}}</div>';
   var dateTemplate 	= '<div class="date">Question: {{question.question}} <br/>Type: {{question.type}}</div>';
