@@ -49,4 +49,9 @@ function EditCtrl($scope, $location, $routeParams, Lexicon) {
       $location.path('/');
     });
   };
+
+  $scope.addQuestion = function() {
+    //alert("yea"); 
+    $scope.lexicon.questions.push({question:"", type: "TEXTBOX"});
+  };
 }
