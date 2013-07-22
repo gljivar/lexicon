@@ -6,29 +6,16 @@
         Required</span>
   </div>
  
-  <div class="control-group" ng-class="{error: myForm.site.$invalid}">
-    <label>Website</label>
-    <input type="url" name="site" ng-model="lexicon.site" required>
-    <span ng-show="myForm.site.$error.required" class="help-inline">
-        Required</span>
-    <span ng-show="myForm.site.$error.url" class="help-inline">
-        Not a URL</span>
-  </div>
- 
   <label>Description</label>
   <textarea name="description" ng-model="lexicon.description"></textarea>
   
   <div id="container" ng-model="lexicon.questions">
-    <!--{{lexicon.description}}-->
-    <ul>
-      <li ng-repeat="question in lexicon.questions">{{question.question}}</li>
-    </ul>
-    <question-item ng-repeat="question in lexicon.questions" question="question"></question-item>
+    <question-item-new ng-repeat="question in lexicon.questions" question="question"></question-item-new>
   </div>
 
   <!-- Test add question -->
   <div class="control-group" ng-model="lexicon.questions"> 
-    <button ng-click="addQuestion()"><i class="icon-plus-sign"/></button> 
+    <a href="" ng-click="addQuestion()"><i class="icon-plus-sign"/></a> 
   </div>
    
   <br>

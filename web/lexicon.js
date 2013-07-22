@@ -22,6 +22,15 @@ function CreateCtrl($scope, $location, Lexicon) {
       $location.path('/edit/' + lexicon._id.$oid);
     });
   }
+
+  $scope.addQuestion = function() {
+    if($scope.lexicon.questions === undefined)
+    {
+      $scope.lexicon.questions = [];
+    }
+    $scope.lexicon.questions.push({question:"", type: "TEXTBOX"});
+    return false; 
+  };
 }
  
  
