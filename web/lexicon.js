@@ -6,7 +6,7 @@ var app = angular.module('lexicon', ['mongolab']).
       when('/', {controller:ListCtrl, templateUrl:'list.html'}).
       when('/edit/:lexiconId', {controller:EditCtrl, templateUrl:'detail.html'}).
       when('/new', {controller:CreateCtrl, templateUrl:'detail.html'}).
-      when('/fill/:lexiconId', {controller:EditCtrl, templateUrl:'fill.html'}).
+      when('/fill/:lexiconId', {controller:LexiconAnswerFillCtrl, templateUrl:'fill.html'}).
       otherwise({redirectTo:'/'});
   });
  
@@ -59,7 +59,25 @@ function EditCtrl($scope, $location, $routeParams, Lexicon) {
   };
 
   $scope.addQuestion = function() {
-    //alert("yea"); 
     $scope.lexicon.questions.push({question:"", type: "TEXTBOX"});
   };
 }
+
+function LexiconAnswerFillCtrl($scope, $location, $routeParams, Lexicon, LexiconAnswer) {
+  var self = this;
+
+  Lexicon.get({id: $routeParams.lexiconId}, function(lexicon) {
+    self.original = lexicon;
+    $scope.lexicon = new Lexicon(self.original);
+    $scope.lexiconAnswer = LexiconAnswer.get();
+  });
+
+  $scope.save = function() {
+    $scope.lexiconAnswer.questions = $scope.lexicon.questions;
+    $scope.lexiconAnswer.lexiconId = $scope.lexicon._id.$oid;
+    LexiconAnswer.save($scope.lexiconAnswer, function(lexiconAnswer) {
+      $location.path('/');
+    });
+  };
+}
+

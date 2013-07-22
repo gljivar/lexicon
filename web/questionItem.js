@@ -2,7 +2,7 @@ app.directive('questionItem', function($compile) {
   var textboxTemplate 	= '<div class="textbox">'
                           + '<label>Question: {{question.question}}</label>' 
                           + '<label>Answer:</label>'
-                          + '<input type="text">'
+                          + '<input type="text" ng-model="question.answer">'
                           + '</div>';
   var imdbTemplate 	= '<div class="imdb">Question: {{question.question}} <br/>Type: {{question.type}}</div>';
   var youtubeTemplate 	= '<div class="youtube">Question: {{question.question}} <br/>Type: {{question.type}}</div>';

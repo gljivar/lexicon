@@ -19,3 +19,24 @@ angular.module('mongolab', ['ngResource']).
  
       return Lexicon;
     });
+
+angular.module('mongolab').
+    factory('LexiconAnswer', function($resource) {
+      var LexiconAnswer = $resource('https://api.mongolab.com/api/1/databases' +
+          '/lexicon/collections/lexicon_answers/:id',
+          { apiKey: 'D66JOrIiHPEHs6NuG7W6-NbCw7wnjiXz' }, {
+            update: { method: 'PUT' }
+          }
+      );
+
+      LexiconAnswer.prototype.update = function(cb) {
+        return LexiconAnswer.update({id: this._id.$oid},
+            angular.extend({}, this, {_id:undefined}), cb);
+      };
+
+      LexiconAnswer.prototype.destroy = function(cb) {
+        return LexiconAnswer.remove({id: this._id.$oid}, cb);
+      };
+
+      return LexiconAnswer;
+    });
