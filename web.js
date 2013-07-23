@@ -11,7 +11,7 @@ app.use("/", express.static(__dirname + '/web'));
   //response.send('Hello World 2!');
 });
 */
-var port = process.argv[2] || 5000;
+var port = process.env.PORT || process.argv[2] || 5000;
 app.listen(port, function() {
   console.log("Listening on " + port);
 });
