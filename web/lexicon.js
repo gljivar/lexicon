@@ -17,6 +17,10 @@ function ListCtrl($scope, Lexicon) {
  
  
 function CreateCtrl($scope, $location, Lexicon) {
+  $scope.lexicon = {};
+  $scope.lexicon.questions = [];
+  $scope.lexicon.nextQuestionId = 1;
+
   $scope.save = function() {
     Lexicon.save($scope.lexicon, function(lexicon) {
       $location.path('/edit/' + lexicon._id.$oid);
@@ -24,24 +28,26 @@ function CreateCtrl($scope, $location, Lexicon) {
   }
 
   $scope.addQuestion = function() {
-    if($scope.lexicon.questions === undefined)
-    {
-      $scope.lexicon.questions = [];
-    }
-    $scope.lexicon.questions.push({question:"", type: "TEXTBOX"});
-    return false; 
+    $scope.lexicon.questions.push({question:"", type: "TEXTBOX", id: $scope.lexicon.nextQuestionId});
+    $scope.lexicon.nextQuestionId++;
+  };
+
+  $scope.removeQuestion = function(question) {
+    $scope.lexicon.questions.splice( $.inArray(question, $scope.lexicon.questions), 1 );
   };
 }
  
  
 function EditCtrl($scope, $location, $routeParams, Lexicon) {
   var self = this;
- 
+
   Lexicon.get({id: $routeParams.lexiconId}, function(lexicon) {
     self.original = lexicon;
     $scope.lexicon = new Lexicon(self.original);
+    $scope.lexicon.questions = $scope.lexicon.questions || [];
+    $scope.lexicon.nextQuestionId = $scope.lexicon.nextQuestionId || 1;
   });
- 
+
   $scope.isClean = function() {
     return angular.equals(self.original, $scope.lexicon);
   }
@@ -54,12 +60,18 @@ function EditCtrl($scope, $location, $routeParams, Lexicon) {
  
   $scope.save = function() {
     $scope.lexicon.update(function() {
-      $location.path('/');
+      self.original = $scope.lexicon;
+      $location.path('/edit/' + $scope.lexicon._id.$oid);
     });
   };
 
   $scope.addQuestion = function() {
-    $scope.lexicon.questions.push({question:"", type: "TEXTBOX"});
+    $scope.lexicon.questions.push({question:"", type: "TEXTBOX", id: $scope.lexicon.nextQuestionId});
+    $scope.lexicon.nextQuestionId++;
+  };
+
+  $scope.removeQuestion = function(question) {
+    $scope.lexicon.questions.splice( $.inArray(question, $scope.lexicon.questions), 1 );
   };
 }
 
@@ -69,11 +81,17 @@ function LexiconAnswerFillCtrl($scope, $location, $routeParams, Lexicon, Lexicon
   Lexicon.get({id: $routeParams.lexiconId}, function(lexicon) {
     self.original = lexicon;
     $scope.lexicon = new Lexicon(self.original);
-    $scope.lexiconAnswer = LexiconAnswer.get();
+    $scope.lexiconAnswer = {};
   });
 
   $scope.save = function() {
-    $scope.lexiconAnswer.questions = $scope.lexicon.questions;
+    $scope.lexiconAnswer.answers = [];
+    $.each($scope.lexicon.questions, function () {
+      $scope.lexiconAnswer.answers.push({
+        questionId: this.id,
+        answer: this.answer
+      });      
+    });
     $scope.lexiconAnswer.lexiconId = $scope.lexicon._id.$oid;
     LexiconAnswer.save($scope.lexiconAnswer, function(lexiconAnswer) {
       $location.path('/');
