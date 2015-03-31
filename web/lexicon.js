@@ -1,6 +1,6 @@
 
 
-var app = angular.module('lexicon', ['mongolab']).
+var app = angular.module('lexicon', ['mongolab','ui']).
   config(function($routeProvider) {
     $routeProvider.
       when('/', {controller:ListCtrl, templateUrl:'list.html'}).
@@ -99,3 +99,7 @@ function LexiconAnswerFillCtrl($scope, $location, $routeParams, Lexicon, Lexicon
   };
 }
 
+
+app.controller('controller', function ($scope) {
+    $scope.list = ["one", "two", "three", "four", "five", "six"];
+});

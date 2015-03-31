@@ -8,7 +8,7 @@
   <label>Description</label>
   <textarea name="description" ng-model="lexicon.description"></textarea>
   
-  <div id="container" ng-model="lexicon.questions">
+  <div id="questions-container" ui-sortable ng-model="lexicon.questions">
     <question-item-new ng-repeat="question in lexicon.questions" question="question" on-remove="removeQuestion(question)"></question-item-new>
   </div>
 
@@ -24,3 +24,11 @@
   <button ng-click="destroy()"
           ng-show="lexicon._id" class="btn btn-danger">Delete</button>
 </form>
+
+<div ng-controller="controller">
+    <div ui-sortable ng-model="list">
+        <question-item-new ng-repeat="item in list" question="item" class="item">{{item}}</question-item-new>
+    </div>
+    <hr />
+    <div ng-repeat="item in list">{{item}}</div>
+</div>

@@ -1,7 +1,7 @@
 app.directive('questionItemNew', function($compile) {
   var textboxTemplate   = '<div class="textbox">'
                           + '<label>Question: </label>'
-                          + '<input type="text" ng-model="question.question" >'
+                          + '<input type="text" ng-model="question.question" />'
                           + '<a href="" ng-click="onRemove({question: question})"><i class="icon-minus-sign"></i></a>'
                           + '</div>';
   var imdbTemplate      = '<div class="imdb">Question: {{question.question}} <br/>Type: {{question.type}}</div>';
@@ -28,6 +28,8 @@ app.directive('questionItemNew', function($compile) {
       case 'DATE':
         template = dateTemplate;
         break;
+      default:
+        template = '<p>HELLO{{question}}</p>';
     }
 
     return template;
@@ -41,7 +43,8 @@ app.directive('questionItemNew', function($compile) {
   return {
     restrict: "E",
     replace: true,
-    link: linker,
+    template: getTemplate(scope.question.type),
+//    link: linker,
     scope: {
       question:'=',
       onRemove: '&'
